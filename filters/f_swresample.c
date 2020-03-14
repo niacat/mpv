@@ -71,14 +71,13 @@ struct priv {
 #define OPT_BASE_STRUCT struct mp_resample_opts
 const struct m_sub_options resample_conf = {
     .opts = (const m_option_t[]) {
-        OPT_INTRANGE("audio-resample-filter-size", filter_size, 0, 0, 32),
-        OPT_INTRANGE("audio-resample-phase-shift", phase_shift, 0, 0, 30),
-        OPT_FLAG("audio-resample-linear", linear, 0),
-        OPT_DOUBLE("audio-resample-cutoff", cutoff, 0,
-                   .min = 0, .max = 1),
-        OPT_FLAG("audio-normalize-downmix", normalize, 0),
-        OPT_DOUBLE("audio-resample-max-output-size", max_output_frame_size, 0),
-        OPT_KEYVALUELIST("audio-swresample-o", avopts, 0),
+        {"audio-resample-filter-size", OPTF_INT(filter_size), .min = 0, .max = 32},
+        {"audio-resample-phase-shift", OPTF_INT(phase_shift), .min = 0, .max = 30},
+        {"audio-resample-linear", OPTF_FLAG(linear)},
+        {"audio-resample-cutoff", OPTF_DOUBLE(cutoff), .min = 0, .max = 1},
+        {"audio-normalize-downmix", OPTF_FLAG(normalize)},
+        {"audio-resample-max-output-size", OPTF_DOUBLE(max_output_frame_size)},
+        {"audio-swresample-o", OPTF_KEYVALUELIST(avopts)},
         {0}
     },
     .size = sizeof(struct mp_resample_opts),

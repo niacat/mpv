@@ -174,13 +174,13 @@ static const m_option_t vf_opts_fields[] = {
                 {"temporal", 3},
                 {"temporal-spatial", 4}),
                OPTDEF_INT(3)),
-    OPT_FLAG("deint", deint_enabled, 0),
+    {"deint", OPTF_FLAG(deint_enabled)},
     OPT_FLAG("chroma-deint", opts.chroma_deint, 0, OPTDEF_INT(1)),
-    OPT_FLAG("pullup", opts.pullup, 0),
-    OPT_FLOATRANGE("denoise", opts.denoise, 0, 0, 1),
-    OPT_FLOATRANGE("sharpen", opts.sharpen, 0, -1, 1),
-    OPT_INTRANGE("hqscaling", opts.hqscaling, 0, 0, 9),
-    OPT_FLAG("interlaced-only", interlaced_only, 0),
+    {"pullup", OPTF_FLAG(opts.pullup)},
+    {"denoise", OPTF_FLOAT(opts.denoise), .min = 0, .max = 1},
+    {"sharpen", OPTF_FLOAT(opts.sharpen), .min = -1, .max = 1},
+    {"hqscaling", OPTF_INT(opts.hqscaling), .min = 0, .max = 9},
+    {"interlaced-only", OPTF_FLAG(interlaced_only)},
     {0}
 };
 

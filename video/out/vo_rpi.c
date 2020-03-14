@@ -889,10 +889,10 @@ fail:
 
 #define OPT_BASE_STRUCT struct priv
 static const struct m_option options[] = {
-    OPT_INT("display", display_nr, 0),
+    {"display", OPTF_INT(display_nr)},
     OPT_INT("layer", layer, 0, OPTDEF_INT(-10)),
-    OPT_FLAG("background", background, 0),
-    OPT_FLAG("osd", enable_osd, 0, OPTDEF_INT(1)),
+    {"background", OPTF_FLAG(background)},
+    {"osd", OPTF_FLAG(enable_osd), OPTDEF_INT(1)},
     {0},
 };
 

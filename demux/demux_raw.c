@@ -55,7 +55,7 @@ struct demux_rawaudio_opts {
 const struct m_sub_options demux_rawaudio_conf = {
     .opts = (const m_option_t[]) {
         OPT_CHANNELS("channels", channels, 0, .min = 1),
-        OPT_INTRANGE("rate", samplerate, 0, 1000, 8 * 48000),
+        {"rate", OPTF_INT(samplerate), .min = 1000, .max = 8 * 48000},
         OPT_CHOICE("format", aformat, 0,
                    ({"u8",      PCM(0, 0,  8, 0)},
                     {"s8",      PCM(1, 0,  8, 0)},
@@ -107,13 +107,13 @@ struct demux_rawvideo_opts {
 #define OPT_BASE_STRUCT struct demux_rawvideo_opts
 const struct m_sub_options demux_rawvideo_conf = {
     .opts = (const m_option_t[]) {
-        OPT_INTRANGE("w", width, 0, 1, 8192),
-        OPT_INTRANGE("h", height, 0, 1, 8192),
+        {"w", OPTF_INT(width), .min = 1, .max = 8192},
+        {"h", OPTF_INT(height), .min = 1, .max = 8192},
         OPT_GENERAL(int, "format", vformat, 0, .type = &m_option_type_fourcc),
-        OPT_IMAGEFORMAT("mp-format", mp_format, 0),
-        OPT_STRING("codec", codec, 0),
-        OPT_FLOATRANGE("fps", fps, 0, 0.001, 1000),
-        OPT_INTRANGE("size", imgsize, 0, 1, 8192 * 8192 * 4),
+        {"mp-format", OPTF_IMAGEFORMAT(mp_format)},
+        {"codec", OPTF_STRING(codec)},
+        {"fps", OPTF_FLOAT(fps), .min = 0.001, .max = 1000},
+        {"size", OPTF_INT(imgsize), .min = 1, .max = 8192 * 8192 * 4},
         {0}
     },
     .size = sizeof(struct demux_rawvideo_opts),

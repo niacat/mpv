@@ -375,12 +375,12 @@ const struct mp_user_filter_entry af_lavcac3enc = {
             .encoder = "ac3",
         },
         .options = (const struct m_option[]) {
-            OPT_FLAG("tospdif", add_iec61937_header, 0),
-            OPT_CHOICE_OR_INT("bitrate", bit_rate, 0, 32, 640,
-                            ({"auto", 0}, {"default", 0})),
-            OPT_INTRANGE("minch", min_channel_num, 0, 2, 6),
-            OPT_STRING("encoder", encoder, 0),
-            OPT_KEYVALUELIST("o", avopts, 0),
+            {"tospdif", OPTF_FLAG(add_iec61937_header)},
+            {"bitrate", OPTF_CHOICE(bit_rate,
+             ({"auto", 0}, {"default", 0})), .min = 32, .max = 640},
+            {"minch", OPTF_INT(min_channel_num), .min = 2, .max = 6},
+            {"encoder", OPTF_STRING(encoder)},
+            {"o", OPTF_KEYVALUELIST(avopts)},
             {0}
         },
     },

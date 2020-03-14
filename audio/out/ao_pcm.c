@@ -221,9 +221,9 @@ const struct ao_driver audio_out_pcm = {
     .priv_size = sizeof(struct priv),
     .priv_defaults = &(const struct priv) { .waveheader = 1 },
     .options = (const struct m_option[]) {
-        OPT_STRING("file", outputfilename, M_OPT_FILE),
-        OPT_FLAG("waveheader", waveheader, 0),
-        OPT_FLAG("append", append, 0),
+        {"file", OPTF_STRING(outputfilename), .flags = M_OPT_FILE},
+        {"waveheader", OPTF_FLAG(waveheader)},
+        {"append", OPTF_FLAG(append)},
         {0}
     },
     .options_prefix = "ao-pcm",

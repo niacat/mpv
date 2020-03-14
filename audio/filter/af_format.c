@@ -128,12 +128,12 @@ const struct mp_user_filter_entry af_format = {
         .description = "Force audio format",
         .priv_size = sizeof(struct f_opts),
         .options = (const struct m_option[]) {
-            OPT_AUDIOFORMAT("format", in_format, 0),
-            OPT_INTRANGE("srate", in_srate, 0, 1000, 8*48000),
+            {"format", OPTF_AUDIOFORMAT(in_format)},
+            {"srate", OPTF_INT(in_srate), .min = 1000, .max = 8*48000},
             OPT_CHANNELS("channels", in_channels, 0, .min = 1),
-            OPT_INTRANGE("out-srate", out_srate, 0, 1000, 8*48000),
+            {"out-srate", OPTF_INT(out_srate), .min = 1000, .max = 8*48000},
             OPT_CHANNELS("out-channels", out_channels, 0, .min = 1),
-            OPT_FLAG("fail", fail, 0),
+            {"fail", OPTF_FLAG(fail)},
             {0}
         },
     },

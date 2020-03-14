@@ -61,9 +61,9 @@ static const struct m_sub_options vo_tct_conf = {
         OPT_CHOICE("vo-tct-algo", algo, 0,
                    ({"plain", ALGO_PLAIN},
                     {"half-blocks", ALGO_HALF_BLOCKS})),
-        OPT_INT("vo-tct-width", width, 0),
-        OPT_INT("vo-tct-height", height, 0),
-        OPT_FLAG("vo-tct-256", term256, 0),
+        {"vo-tct-width", OPTF_INT(width)},
+        {"vo-tct-height", OPTF_INT(height)},
+        {"vo-tct-256", OPTF_FLAG(term256)},
         {0}
     },
     .defaults = &(const struct vo_tct_opts) {

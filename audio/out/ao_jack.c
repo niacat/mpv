@@ -55,12 +55,12 @@ struct jack_opts {
 #define OPT_BASE_STRUCT struct jack_opts
 static const struct m_sub_options ao_jack_conf = {
     .opts = (const struct m_option[]){
-        OPT_STRING("jack-port", port, 0),
-        OPT_STRING("jack-name", client_name, 0),
-        OPT_FLAG("jack-autostart", autostart, 0),
-        OPT_FLAG("jack-connect", connect, 0),
-        OPT_CHOICE("jack-std-channel-layout", stdlayout, 0,
-                   ({"waveext", 0}, {"any", 1})),
+        {"jack-port", OPTF_STRING(port)},
+        {"jack-name", OPTF_STRING(client_name)},
+        {"jack-autostart", OPTF_FLAG(autostart)},
+        {"jack-connect", OPTF_FLAG(connect)},
+        {"jack-std-channel-layout", OPTF_CHOICE(stdlayout,
+         ({"waveext", 0}, {"any", 1}))},
         {0}
     },
     .defaults = &(const struct jack_opts) {

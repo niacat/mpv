@@ -592,7 +592,137 @@ extern const char m_option_path_separator;
 
 #define OPTF_BOOL(field) \
     .type = &m_option_type_bool, \
-    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, bool),
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, bool)
+
+#define OPTF_FLAG(field) \
+    .type = &m_option_type_flag, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int)
+
+#define OPTF_INT(field) \
+    .type = &m_option_type_int, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int)
+
+#define OPTF_INT64(field) \
+    .type = &m_option_type_int64, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int64_t)
+
+#define OPTF_FLOAT(field) \
+    .type = &m_option_type_float, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, float)
+
+#define OPTF_DOUBLE(field) \
+    .type = &m_option_type_double, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, double)
+
+#define OPTF_STRING(field) \
+    .type = &m_option_type_string, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, char*)
+
+#define OPTF_STRINGLIST(field) \
+    .type = &m_option_type_string_list, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, char**)
+
+#define OPTF_KEYVALUELIST(field) \
+    .type = &m_option_type_keyvalue_list, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, char**)
+
+#define OPTF_PATHLIST(field) \
+    .type = &m_option_type_string_list, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, char**), \
+    .priv = (void *)&m_option_path_separator
+
+#define OPTF_TIME(field) \
+    .type = &m_option_type_time, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, double)
+
+#define OPTF_REL_TIME(field) \
+    .type = &m_option_type_rel_time, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, struct m_rel_time)
+
+#define OPTF_COLOR(field) \
+    .type = &m_option_type_color, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, struct m_color)
+
+#define OPTF_BYTE_SIZE(field) \
+    .type = &m_option_type_byte_size, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, struct int64_t)
+
+#define OPTF_GEOMETRY(field) \
+    .type = &m_option_type_geometry, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, struct m_geometry)
+
+#define OPTF_SIZE_BOX(field) \
+    .type = &m_option_type_size_box, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, struct m_geometry)
+
+#define OPTF_IMAGEFORMAT(field) \
+    .type = &m_option_type_imgfmt, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int)
+
+#define OPTF_AUDIOFORMAT(field) \
+    .type = &m_option_type_afmt, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int)
+
+// If .min==1, then passing auto is disallowed, but "" is still accepted, and
+// limit channel list to 1 item.
+#define OPTF_CHANNELS(field) \
+    .type = &m_option_type_channels, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, struct m_channels)
+
+#define OPTF_STRING_VALIDATE(field, validate_fn) \
+    .type = &m_option_type_string, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, char*), \
+    .priv = MP_EXPECT_TYPE(m_opt_string_validate_fn, validate_fn)
+
+#define M_CHOICES(choices)                                              \
+    .priv = (void *)&(const struct m_opt_choice_alternatives[]){        \
+                      OPT_HELPER_REMOVEPAREN choices, {NULL}}
+
+// Variant which takes a pointer to struct m_opt_choice_alternatives directly
+#define OPTF_CHOICE_C(field, choices) \
+    .type = &m_option_type_choice, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int), \
+    .priv = (void *)MP_EXPECT_TYPE(const struct m_opt_choice_alternatives*, choices)
+
+// Variant where you pass a struct m_opt_choice_alternatives initializer
+#define OPTF_CHOICE(field, choices) \
+    .type = &m_option_type_choice, \
+    .offset = MP_CHECKED_OFFSETOF(OPT_BASE_STRUCT, field, int), \
+    M_CHOICES(choices)
+
+// subconf must have the type struct m_sub_options.
+// All sub-options are prefixed with "name-" and are added to the current
+// (containing) option list.
+// If name is "", add the sub-options directly instead.
+// "field" refers to the field, that must be a pointer to a field described by
+// the subconf struct.
+#define OPTF_SUBSTRUCT(field, subconf) \
+    .offset = offsetof(OPT_BASE_STRUCT, field), \
+    .type = &m_option_type_subconfig, .priv = (void*)&subconf
+
+// Non-fields
+
+#define OPTF_ALIAS(newname) \
+    .type = &m_option_type_alias, .priv = newname, .offset = -1
+
+// If "--optname" was removed, but "--newname" has the same semantics.
+// It will be redirected, and a warning will be printed on first use.
+#define OPTF_REPLACED_MSG(newname, msg) \
+    .type = &m_option_type_alias, .priv = newname, \
+    .deprecation_message = (msg), .offset = -1
+
+// Same, with a generic deprecation message.
+#define OPTF_REPLACED(newname) OPTF_REPLACED_MSG(newname, "")
+
+// Alias, resolved on the CLI/config file/profile parser level only.
+#define OPTF_CLI_ALIAS(newname) \
+    .type = &m_option_type_cli_alias, .priv = newname, \
+    .flags = M_OPT_NOPROP, .offset = -1
+
+// "--optname" doesn't exist, but inform the user about a replacement with msg.
+#define OPTF_REMOVED(msg) \
+    .type = &m_option_type_removed, .priv = msg, \
+    .deprecation_message = "", .flags = M_OPT_NOPROP, .offset = -1
 
 /* The OPT_SOMETHING->OPT_SOMETHING_ kind of redirection exists to
  * make the code fully standard-conforming: the C standard requires that
@@ -659,10 +789,6 @@ extern const char m_option_path_separator;
 // limit channel list to 1 item.
 #define OPT_CHANNELS(...) \
     OPT_GENERAL(struct m_channels, __VA_ARGS__, .type = &m_option_type_channels)
-
-#define M_CHOICES(choices)                                              \
-    .priv = (void *)&(const struct m_opt_choice_alternatives[]){        \
-                      OPT_HELPER_REMOVEPAREN choices, {NULL}}
 
 #define OPT_CHOICE(...) \
     OPT_CHOICE_(__VA_ARGS__, .type = &m_option_type_choice)

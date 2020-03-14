@@ -183,26 +183,26 @@ struct input_opts {
 
 const struct m_sub_options input_config = {
     .opts = (const m_option_t[]) {
-        OPT_STRING("input-conf", config_file, M_OPT_FILE),
-        OPT_INT("input-ar-delay", ar_delay, 0),
-        OPT_INT("input-ar-rate", ar_rate, 0),
+        {"input-conf", OPTF_STRING(config_file), .flags = M_OPT_FILE},
+        {"input-ar-delay", OPTF_INT(ar_delay)},
+        {"input-ar-rate", OPTF_INT(ar_rate)},
         OPT_PRINT("input-keylist", mp_print_key_list),
         OPT_PRINT("input-cmdlist", mp_print_cmd_list),
-        OPT_FLAG("input-default-bindings", default_bindings, 0),
-        OPT_FLAG("input-test", test, 0),
-        OPT_INTRANGE("input-doubleclick-time", doubleclick_time, 0, 0, 1000),
-        OPT_FLAG("input-right-alt-gr", use_alt_gr, 0),
-        OPT_INTRANGE("input-key-fifo-size", key_fifo_size, 0, 2, 65000),
-        OPT_FLAG("input-cursor", enable_mouse_movements, 0),
-        OPT_FLAG("input-vo-keyboard", vo_key_input, 0),
-        OPT_FLAG("input-media-keys", use_media_keys, 0),
+        {"input-default-bindings", OPTF_FLAG(default_bindings)},
+        {"input-test", OPTF_FLAG(test)},
+        {"input-doubleclick-time", OPTF_INT(doubleclick_time), .min = 0, .max = 1000},
+        {"input-right-alt-gr", OPTF_FLAG(use_alt_gr)},
+        {"input-key-fifo-size", OPTF_INT(key_fifo_size), .min = 2, .max = 65000},
+        {"input-cursor", OPTF_FLAG(enable_mouse_movements)},
+        {"input-vo-keyboard", OPTF_FLAG(vo_key_input)},
+        {"input-media-keys", OPTF_FLAG(use_media_keys)},
 #if HAVE_SDL2_GAMEPAD
-        OPT_FLAG("input-gamepad", use_gamepad, 0),
+        {"input-gamepad", OPTF_FLAG(use_gamepad)},
 #endif
-        OPT_FLAG("window-dragging", allow_win_drag, 0),
-        OPT_REPLACED("input-x11-keyboard", "input-vo-keyboard"),
+        {"window-dragging", OPTF_FLAG(allow_win_drag)},
+        {"input-x11-keyboard", OPTF_REPLACED("input-vo-keyboard")},
 #if HAVE_COCOA
-        OPT_REMOVED("input-appleremote", "replaced by MediaPlayer support"),
+        {"input-appleremote", OPTF_REMOVED("replaced by MediaPlayer support")},
 #endif
         {0}
     },

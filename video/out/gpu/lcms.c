@@ -78,16 +78,16 @@ static int validate_3dlut_size_opt(struct mp_log *log, const m_option_t *opt,
 #define OPT_BASE_STRUCT struct mp_icc_opts
 const struct m_sub_options mp_icc_conf = {
     .opts = (const m_option_t[]) {
-        OPT_FLAG("use-embedded-icc-profile", use_embedded, 0),
-        OPT_STRING("icc-profile", profile, M_OPT_FILE),
-        OPT_FLAG("icc-profile-auto", profile_auto, 0),
-        OPT_STRING("icc-cache-dir", cache_dir, M_OPT_FILE),
-        OPT_INT("icc-intent", intent, 0),
+        {"use-embedded-icc-profile", OPTF_FLAG(use_embedded)},
+        {"icc-profile", OPTF_STRING(profile), .flags = M_OPT_FILE},
+        {"icc-profile-auto", OPTF_FLAG(profile_auto)},
+        {"icc-cache-dir", OPTF_STRING(cache_dir), .flags = M_OPT_FILE},
+        {"icc-intent", OPTF_INT(intent)},
         OPT_CHOICE_OR_INT("icc-contrast", contrast, 0, 0, 1000000, ({"inf", -1})),
-        OPT_STRING_VALIDATE("icc-3dlut-size", size_str, 0, validate_3dlut_size_opt),
+        {"icc-3dlut-size", OPTF_STRING_VALIDATE(size_str, validate_3dlut_size_opt)},
 
-        OPT_REPLACED("3dlut-size", "icc-3dlut-size"),
-        OPT_REMOVED("icc-cache", "see icc-cache-dir"),
+        {"3dlut-size", OPTF_REPLACED("icc-3dlut-size")},
+        {"icc-cache", OPTF_REMOVED("see icc-cache-dir")},
         {0}
     },
     .size = sizeof(struct mp_icc_opts),

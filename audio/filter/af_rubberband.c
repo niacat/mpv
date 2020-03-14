@@ -361,7 +361,7 @@ const struct mp_user_filter_entry af_rubberband = {
             OPT_CHOICE("channels", channels, 0,
                     ({"apart", RubberBandOptionChannelsApart},
                      {"together", RubberBandOptionChannelsTogether})),
-            OPT_DOUBLE("pitch-scale", scale, 0, .min = 0.01, .max = 100),
+            {"pitch-scale", OPTF_DOUBLE(scale), .min = 0.01, .max = 100},
             {0}
         },
     },

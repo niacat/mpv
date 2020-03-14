@@ -254,8 +254,8 @@ const struct ao_driver audio_out_opensles = {
         .buffer_size_in_ms = 250,
     },
     .options = (const struct m_option[]) {
-        OPT_INTRANGE("frames-per-enqueue", frames_per_enqueue, 0, 1, 96000),
-        OPT_INTRANGE("buffer-size-in-ms", buffer_size_in_ms, 0, 0, 500),
+        {"frames-per-enqueue", OPTF_INT(frames_per_enqueue), .min = 1, .max = 96000},
+        {"buffer-size-in-ms", OPTF_INT(buffer_size_in_ms), .min = 0, .max = 500},
         {0}
     },
     .options_prefix = "opensles",

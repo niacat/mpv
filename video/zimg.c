@@ -45,10 +45,10 @@ static const struct m_opt_choice_alternatives mp_zimg_scalers[] = {
 #define OPT_BASE_STRUCT struct zimg_opts
 const struct m_sub_options zimg_conf = {
     .opts = (struct m_option[]) {
-        OPT_CHOICE_C("scaler", scaler, 0, mp_zimg_scalers),
+        {"scaler", OPTF_CHOICE_C(scaler, mp_zimg_scalers)},
         OPT_PARAM("scaler-param-a", scaler_params[0], 0),
         OPT_PARAM("scaler-param-b", scaler_params[1], 0),
-        OPT_CHOICE_C("scaler-chroma", scaler_chroma, 0, mp_zimg_scalers),
+        {"scaler-chroma", OPTF_CHOICE_C(scaler_chroma, mp_zimg_scalers)},
         OPT_PARAM("scaler-chroma-param-a", scaler_chroma_params[0], 0),
         OPT_PARAM("scaler-chroma-param-b", scaler_chroma_params[1], 0),
         OPT_CHOICE("dither", dither, 0,
@@ -56,7 +56,7 @@ const struct m_sub_options zimg_conf = {
                     {"ordered",         ZIMG_DITHER_ORDERED},
                     {"random",          ZIMG_DITHER_RANDOM},
                     {"error-diffusion", ZIMG_DITHER_ERROR_DIFFUSION})),
-        OPT_FLAG("fast", fast, 0),
+        {"fast", OPTF_FLAG(fast)},
         {0}
     },
     .size = sizeof(struct zimg_opts),

@@ -902,7 +902,7 @@ const struct vo_driver video_out_vaapi = {
                     {"fast", VA_FILTER_SCALING_FAST},
                     {"hq", VA_FILTER_SCALING_HQ},
                     {"nla", VA_FILTER_SCALING_NL_ANAMORPHIC})),
-        OPT_FLAG("scaled-osd", force_scaled_osd, 0),
+        {"scaled-osd", OPTF_FLAG(force_scaled_osd)},
         {0}
     },
     .options_prefix = "vo-vaapi",

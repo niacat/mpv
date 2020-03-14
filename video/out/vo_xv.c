@@ -909,9 +909,9 @@ const struct vo_driver video_out_xv = {
                     {"bg", CK_METHOD_BACKGROUND},
                     {"man", CK_METHOD_MANUALFILL},
                     {"auto", CK_METHOD_AUTOPAINT})),
-        OPT_INT("colorkey", colorkey, 0),
-        OPT_INTRANGE("buffers", cfg_buffers, 0, 1, MAX_BUFFERS),
-        OPT_REMOVED("no-colorkey", "use ck-method=none instead"),
+        {"colorkey", OPTF_INT(colorkey)},
+        {"buffers", OPTF_INT(cfg_buffers), .min = 1, .max = MAX_BUFFERS},
+        {"no-colorkey", OPTF_REMOVED("use ck-method=none instead")},
         {0}
     },
     .options_prefix = "xv",

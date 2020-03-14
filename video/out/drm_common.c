@@ -80,11 +80,11 @@ const struct m_sub_options drm_conf = {
         OPT_CHOICE("drm-format", drm_format, 0,
                    ({"xrgb8888",    DRM_OPTS_FORMAT_XRGB8888},
                     {"xrgb2101010", DRM_OPTS_FORMAT_XRGB2101010})),
-        OPT_SIZE_BOX("drm-draw-surface-size", drm_draw_surface_size, 0),
+        {"drm-draw-surface-size", OPTF_SIZE_BOX(drm_draw_surface_size)},
 
-        OPT_REPLACED("drm-osd-plane-id", "drm-draw-plane"),
-        OPT_REPLACED("drm-video-plane-id", "drm-drmprime-video-plane"),
-        OPT_REPLACED("drm-osd-size", "drm-draw-surface-size"),
+        {"drm-osd-plane-id", OPTF_REPLACED("drm-draw-plane")},
+        {"drm-video-plane-id", OPTF_REPLACED("drm-drmprime-video-plane")},
+        {"drm-osd-size", OPTF_REPLACED("drm-draw-surface-size")},
         {0},
     },
     .defaults = &(const struct drm_opts) {

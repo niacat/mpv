@@ -147,8 +147,8 @@ static struct mp_filter *vf_sub_create(struct mp_filter *parent, void *options)
 
 #define OPT_BASE_STRUCT struct vf_sub_opts
 static const m_option_t vf_opts_fields[] = {
-    OPT_INTRANGE("bottom-margin", bottom_margin, 0, 0, 2000),
-    OPT_INTRANGE("top-margin", top_margin, 0, 0, 2000),
+    {"bottom-margin", OPTF_INT(bottom_margin), .min = 0, .max = 2000},
+    {"top-margin", OPTF_INT(top_margin), .min = 0, .max = 2000},
     {0}
 };
 

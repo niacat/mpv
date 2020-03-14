@@ -821,13 +821,13 @@ bool mp_colorspace_equal(struct mp_colorspace c1, struct mp_colorspace c2)
 
 const struct m_sub_options mp_csp_equalizer_conf = {
     .opts = (const m_option_t[]) {
-        OPT_INTRANGE("brightness", values[MP_CSP_EQ_BRIGHTNESS], 0, -100, 100),
-        OPT_INTRANGE("saturation", values[MP_CSP_EQ_SATURATION], 0, -100, 100),
-        OPT_INTRANGE("contrast", values[MP_CSP_EQ_CONTRAST], 0, -100, 100),
-        OPT_INTRANGE("hue", values[MP_CSP_EQ_HUE], 0, -100, 100),
-        OPT_INTRANGE("gamma", values[MP_CSP_EQ_GAMMA], 0, -100, 100),
-        OPT_CHOICE_C("video-output-levels", values[MP_CSP_EQ_OUTPUT_LEVELS], 0,
-                     mp_csp_levels_names),
+        {"brightness", OPTF_INT(values[MP_CSP_EQ_BRIGHTNESS]), .min = -100, .max = 100},
+        {"saturation", OPTF_INT(values[MP_CSP_EQ_SATURATION]), .min = -100, .max = 100},
+        {"contrast", OPTF_INT(values[MP_CSP_EQ_CONTRAST]), .min = -100, .max = 100},
+        {"hue", OPTF_INT(values[MP_CSP_EQ_HUE]), .min = -100, .max = 100},
+        {"gamma", OPTF_INT(values[MP_CSP_EQ_GAMMA]), .min = -100, .max = 100},
+        {"video-output-levels",
+         OPTF_CHOICE_C(values[MP_CSP_EQ_OUTPUT_LEVELS], mp_csp_levels_names)},
         {0}
     },
     .size = sizeof(struct mp_csp_equalizer_opts),

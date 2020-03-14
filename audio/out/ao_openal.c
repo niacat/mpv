@@ -428,9 +428,9 @@ const struct ao_driver audio_out_openal = {
         .direct_channels = 0,
     },
     .options = (const struct m_option[]) {
-        OPT_INTRANGE("num-buffers", num_buffers, 0, 2, MAX_BUF),
-        OPT_INTRANGE("num-samples", num_samples, 0, 256, MAX_SAMPLES),
-        OPT_FLAG("direct-channels", direct_channels, 0),
+        {"num-buffers", OPTF_INT(num_buffers), .min = 2, .max = MAX_BUF},
+        {"num-samples", OPTF_INT(num_samples), .min = 256, .max = MAX_SAMPLES},
+        {"direct-channels", OPTF_FLAG(direct_channels)},
         {0}
     },
     .options_prefix = "openal",

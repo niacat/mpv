@@ -800,10 +800,10 @@ error:
 
 #define OPT_BASE_STRUCT struct vapoursynth_opts
 static const m_option_t vf_opts_fields[] = {
-    OPT_STRING("file", file, M_OPT_FILE),
+    {"file", OPTF_STRING(file), .flags = M_OPT_FILE},
     OPT_INTRANGE("buffered-frames", maxbuffer, 0, 1, 9999, OPTDEF_INT(4)),
-    OPT_CHOICE_OR_INT("concurrent-frames", maxrequests, 0, 1, 99,
-                      ({"auto", -1}), OPTDEF_INT(-1)),
+    {"concurrent-frames", OPTF_CHOICE(maxrequests, ({"auto", -1})),
+     .min = 1, .max = 99, OPTDEF_INT(-1)},
     {0}
 };
 

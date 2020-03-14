@@ -480,8 +480,8 @@ static const m_option_t vf_opts_fields[] = {
                 {"weave", 3},
                 {"motion-adaptive", 4},
                 {"motion-compensated", 5})),
-    OPT_FLAG("interlaced-only", interlaced_only, 0),
-    OPT_FLAG("reversal-bug", reversal_bug, 0),
+    {"interlaced-only", OPTF_FLAG(interlaced_only)},
+    {"reversal-bug", OPTF_FLAG(reversal_bug)},
     {0}
 };
 

@@ -137,10 +137,10 @@ static const struct m_obj_list ao_obj_list = {
 const struct m_sub_options ao_conf = {
     .opts = (const struct m_option[]) {
         OPT_SETTINGSLIST("ao", audio_driver_list, UPDATE_AUDIO, &ao_obj_list, ),
-        OPT_STRING("audio-device", audio_device, UPDATE_AUDIO),
-        OPT_STRING("audio-client-name", audio_client_name, UPDATE_AUDIO),
-        OPT_DOUBLE("audio-buffer", audio_buffer,
-                   UPDATE_AUDIO, .min = 0, .max = 10),
+        {"audio-device", OPTF_STRING(audio_device), .flags = UPDATE_AUDIO},
+        {"audio-client-name", OPTF_STRING(audio_client_name), .flags = UPDATE_AUDIO},
+        {"audio-buffer", OPTF_DOUBLE(audio_buffer),
+         .flags = UPDATE_AUDIO, .min = 0, .max = 10},
         {0}
     },
     .size = sizeof(OPT_BASE_STRUCT),

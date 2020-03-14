@@ -476,8 +476,8 @@ fail:
 
 #define OPT_BASE_STRUCT struct opts
 static const m_option_t vf_opts_fields[] = {
-    OPT_FLAG("deint", deint_enabled, 0),
-    OPT_FLAG("interlaced-only", interlaced_only, 0),
+    {"deint", OPTF_FLAG(deint_enabled)},
+    {"interlaced-only", OPTF_FLAG(interlaced_only)},
     OPT_CHOICE("mode", mode, 0,
         ({"blend", D3D11_VIDEO_PROCESSOR_PROCESSOR_CAPS_DEINTERLACE_BLEND},
          {"bob", D3D11_VIDEO_PROCESSOR_PROCESSOR_CAPS_DEINTERLACE_BOB},

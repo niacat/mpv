@@ -73,11 +73,11 @@ static pthread_mutex_t global_dvb_state_lock = PTHREAD_MUTEX_INITIALIZER;
 
 const struct m_sub_options stream_dvb_conf = {
     .opts = (const m_option_t[]) {
-        OPT_STRING("prog", cfg_prog, UPDATE_DVB_PROG),
-        OPT_INTRANGE("card", cfg_devno, 0, 0, MAX_ADAPTERS-1),
-        OPT_INTRANGE("timeout", cfg_timeout, 0, 1, 30),
-        OPT_STRING("file", cfg_file, M_OPT_FILE),
-        OPT_FLAG("full-transponder", cfg_full_transponder, 0),
+        {"prog", OPTF_STRING(cfg_prog), .flags = UPDATE_DVB_PROG},
+        {"card", OPTF_INT(cfg_devno), .min = 0, .max = MAX_ADAPTERS-1},
+        {"timeout", OPTF_INT(cfg_timeout), .min = 1, .max = 30},
+        {"file", OPTF_STRING(cfg_file), .flags = M_OPT_FILE},
+        {"full-transponder", OPTF_FLAG(cfg_full_transponder)},
         OPT_INT("channel-switch-offset", cfg_channel_switch_offset,
                 UPDATE_DVB_PROG),
         {0}
