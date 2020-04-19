@@ -62,12 +62,6 @@ static const struct ao_driver * const audio_out_drivers[] = {
 #if HAVE_COREAUDIO
     &audio_out_coreaudio,
 #endif
-#if HAVE_PULSE
-    &audio_out_pulse,
-#endif
-#if HAVE_ALSA
-    &audio_out_alsa,
-#endif
 #if HAVE_WASAPI
     &audio_out_wasapi,
 #endif
